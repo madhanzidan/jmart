@@ -1,35 +1,71 @@
 package zidanJmartKD;
-
-
-/**
- * Write a description of class Jmart here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
+ 
 public class Jmart
 {
-    // instance variables - replace the example below with your own
-    private int x;
-
-    /**
-     * Constructor for objects of class Jmart
-     */
-    public Jmart()
+    public static void main(String[] args)
     {
-        // initialise instance variables
-        x = 0;
+        
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
+    
+    public static int getPromo()
     {
-        // put your code here
-        return x + y;
+        return 0;
     }
+    
+    public static String  getCustomer()
+    {
+        return "oop";
+    }
+    
+    public static float getDiscountPercentage(int before, int after)
+    {
+        float potonganHarga;
+        
+        if (before > after)
+        {
+            potonganHarga = before - after;
+            potonganHarga = (potonganHarga * 100) / before;
+        }
+        else
+        {
+            potonganHarga = 0;
+        }
+        return potonganHarga;
+    }
+    
+    public static int getDiscountedPrice(int price, float discountPercentage)
+    {
+        float endDiscountedPrice  = price - (price * discountPercentage / 100);
+        if (discountPercentage > 100.0f)
+        {
+            return 0;
+        }
+        else
+        {
+            return (int)endDiscountedPrice;
+        }
+    }
+    
+    public static int getOriginalPrice(int discountedPrice, float discountPercentage)
+    {
+        float originalPrice = discountedPrice / (discountPercentage / 100);
+        
+        return (int)originalPrice;
+    }
+    
+    public float getCommisionMultiplier()
+    {
+        return 0.05f;
+    }
+    
+    public static int getAdjustedPrice(int price)
+    {
+        return 0;
+    }
+    
+    public static int  getAdminFee(int price)
+    {
+        return 0;
+    }
+    
 }
