@@ -1,5 +1,5 @@
 package zidanJmartKD;
- 
+
 public class Jmart
 {
     public static void main(String[] args)
@@ -12,60 +12,57 @@ public class Jmart
         return 0;
     }
     
-    public static String  getCustomer()
+    public static String getCustomer()
     {
         return "oop";
     }
     
     public static float getDiscountPercentage(int before, int after)
     {
-        float potonganHarga;
+        int potonganHarga = before - after; 
         
         if (before > after)
         {
-            potonganHarga = before - after;
             potonganHarga = (potonganHarga * 100) / before;
+            return (float)potonganHarga;
         }
         else
         {
             potonganHarga = 0;
         }
-        return potonganHarga;
+        return (float)potonganHarga;
     }
     
     public static int getDiscountedPrice(int price, float discountPercentage)
     {
-        float endDiscountedPrice  = price - (price * discountPercentage / 100);
         if (discountPercentage > 100.0f)
         {
             return 0;
         }
         else
         {
-            return (int)endDiscountedPrice;
+            return (int)(price - (price * discountPercentage / 100));
         }
     }
     
     public static int getOriginalPrice(int discountedPrice, float discountPercentage)
     {
-        float originalPrice = discountedPrice / (discountPercentage / 100);
-        
-        return (int)originalPrice;
+        return (int)(discountedPrice / (discountPercentage / 100));
     }
     
-    public float getCommisionMultiplier()
+    public static float getCommisionMultiplier()
     {
         return 0.05f;
     }
     
     public static int getAdjustedPrice(int price)
     {
-        return 0;
+       // return price + (int)(price * getCommisionMultiplier());
+       return (int)(price + (price * getCommisionMultiplier()));
     }
     
-    public static int  getAdminFee(int price)
+    public static int getAdminFee(int price)
     {
-        return 0;
+        return (int)(price * getCommisionMultiplier());
     }
-    
 }
