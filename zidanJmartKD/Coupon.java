@@ -26,26 +26,18 @@ public class Coupon
     public boolean canApply (PriceTag priceTag)
     {
         if (priceTag.getAdjustedPrice() >= minimum && used == false)
-        {
             return true;
-        }
         else
-        {
             return false;
-        }
     }
     
     public double apply (PriceTag priceTag)
     {
         used = true;
         if (type == Type.DISCOUNT)
-        {
             return priceTag.getAdjustedPrice() - (priceTag.getAdjustedPrice() * cut / 100); 
-        }
         else if (type == Type.REBATE)
-        {
             return priceTag.getAdjustedPrice() - cut;
-        }
         else
             return 0;
     }

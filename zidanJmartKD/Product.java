@@ -2,7 +2,7 @@ package zidanJmartKD;
 
 public class Product
 {
-    private int idCounter;
+    private static int idCounter = 0;
     public int id;
     public String name;
     public int weight;
@@ -20,7 +20,6 @@ public class Product
         this.category = category;
         this.rating = new ProductRating();
         
-        id = 0;
         this.id = idCounter;
         idCounter++;
     }

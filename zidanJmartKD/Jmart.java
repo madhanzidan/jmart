@@ -10,21 +10,24 @@ public class Jmart
     
     public static Product createProduct()
     {
-        return null;
+        Product smartphone = new Product("Smart Phone", 500, false, new PriceTag(8500000), ProductCategory.ELECTRONIC);
+        return smartphone;
     }
-    
     public static Coupon createCoupon()
     {
-        return null;
+        Coupon flashSale = new Coupon("FLASH SALE", 777, Coupon.Type.DISCOUNT, 40, 100000);
+        return flashSale;
     }
     
     public static ShipmentDuration createShipmentDuration()
     {
-        return null;
+        ShipmentDuration domestic = new ShipmentDuration(ShipmentDuration.INSTANT, ShipmentDuration.NEXT_DAY); 
+        return domestic;
     }
     
     public Product create()
     {
-        return null;
+        Product weddingCake = new Product("Wedding Cake", 2000, false, new PriceTag(1000000), ProductCategory.WEDDING);
+        return weddingCake;
     }
 }

@@ -13,20 +13,16 @@ public class ProductRating
     
     public void insert (int rating)
     {
-        total = total + rating;
+        total += rating;
         count++;
     }
     
     public double getAverage()
     {
         if (count == 0)
-        {
             return 0;
-        }
         else
-        {
-            return total/count;
-        }
+            return total / count;
     }
     
     public long getCount()
