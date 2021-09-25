@@ -35,7 +35,7 @@ public class PriceTag
        if (getDiscountedPrice() <= BOTTOM_PRICE)
            return BOTTOM_FEE;
        else
-           return COMMISSION_MULTIPLIER*getDiscountedPrice();
+           return COMMISSION_MULTIPLIER * getDiscountedPrice();
     }
     
     public double getAdjustedPrice()

@@ -8,10 +8,14 @@ public class Jmart
         
     }
     
-    public static Product createProduct()
+      public static Product createProduct()
     {
+        /*
         Product smartphone = new Product("Smart Phone", 500, false, new PriceTag(8500000), ProductCategory.ELECTRONIC);
         return smartphone;
+        */
+       
+       return null;
     }
     public static Coupon createCoupon()
     {
@@ -27,7 +31,10 @@ public class Jmart
     
     public Product create()
     {
+        /*
         Product weddingCake = new Product("Wedding Cake", 2000, false, new PriceTag(1000000), ProductCategory.WEDDING);
         return weddingCake;
+        */
+       return null;
     }
 }
