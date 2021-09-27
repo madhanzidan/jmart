@@ -22,13 +22,13 @@ public class Jmart
         Coupon flashSale = new Coupon("FLASH SALE", 777, Coupon.Type.DISCOUNT, 40, 100000);
         return flashSale;
     }
-    
+    /*
     public static ShipmentDuration createShipmentDuration()
     {
         ShipmentDuration domestic = new ShipmentDuration(ShipmentDuration.INSTANT, ShipmentDuration.NEXT_DAY); 
         return domestic;
     }
-    
+    */
     public Product create()
     {
         /*

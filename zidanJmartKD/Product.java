@@ -12,22 +12,9 @@ public class Product extends Recognizable
     public ProductCategory category;
     public ProductRating rating;
     public int storeId;
+    public Shipment.MultiDuration multiDuration;
     
-    /*public Product(String name, int weight, boolean conditionUsed, PriceTag priceTag, ProductCategory category)
-    {
-        this.name = name;
-        this.weight = weight;
-        this.conditionUsed = conditionUsed;
-        this.priceTag = priceTag;
-        this.category = category;
-        this.rating = new ProductRating();
-        
-        this.id = idCounter;
-        idCounter++;
-    }*/
-    
-    
-    public Product(int id, int storeId, String name, int weight, boolean conditionUsed, PriceTag priceTag, ProductCategory category)
+    public Product(int id, int storeId, String name, int weight, boolean conditionUsed, PriceTag priceTag, ProductCategory category, Shipment.MultiDuration multiDuration)
     {
         super(id);
         this.storeId = storeId;
@@ -36,7 +23,22 @@ public class Product extends Recognizable
         this.conditionUsed = conditionUsed;
         this.priceTag = priceTag;
         this.category = category;
-        
+        this.multiDuration = multiDuration;
+    }
+    
+    public String toString(){
+        return 
+        "Name: "+ name +
+        "\nWeight: " + weight +
+        "\nconditionUsed: " + conditionUsed +
+        "\npriceTag: " + priceTag +
+        "\ncategory: " + category +
+        "\nrating: " + rating +
+        "\nstoreId: " + storeId;
+    }
+    
+    public boolean read (String content){
+        return false;
     }
     
     
@@ -50,8 +52,4 @@ public class Product extends Recognizable
         this.category = category;        
     }
     
-    public boolean read (String productRead)
-    {
-        return true;
-    }
 }

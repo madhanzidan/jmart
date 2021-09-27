@@ -7,7 +7,6 @@ comment2.target=Product\ createProduct()
 comment3.params=
 comment3.target=Coupon\ createCoupon()
 comment4.params=
-comment4.target=ShipmentDuration\ createShipmentDuration()
-comment5.params=
-comment5.target=Product\ create()
-numComments=6
+comment4.target=Product\ create()
+comment4.text=\r\n\ \ \ \ public\ static\ ShipmentDuration\ createShipmentDuration()\r\n\ \ \ \ {\r\n\ \ \ \ \ \ \ \ ShipmentDuration\ domestic\ \=\ new\ ShipmentDuration(ShipmentDuration.INSTANT,\ ShipmentDuration.NEXT_DAY);\ \r\n\ \ \ \ \ \ \ \ return\ domestic;\r\n\ \ \ \ }\r\n
+numComments=5
