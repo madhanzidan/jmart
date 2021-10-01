@@ -9,24 +9,11 @@ public class Complaint extends Recognizable implements FileParser
     {
         super(id);
         this.desc = desc;
-        desc = "1";
+        date =  "1";
     }
     
-    //FileParser
-     @Override
+    @Override //FileParser
     public boolean read (String content){
         return false;
     }
-    
-    @Override
-    public Object write()
-    {
-        return null;
-    }
-    
-    public Object newInstance (String content)
-    {
-        return null;
-    }
-    
 }

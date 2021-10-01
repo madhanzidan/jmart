@@ -12,19 +12,19 @@ public class Payment extends Invoice implements Transactor
       this.shipment = shipment;
     }
     
-    //Transactor
-    public boolean validate()
-    {
-        return false;
-    }
-    public Invoice perform(){
-        return null;
-    }
-    
-    //getTotalPay
     public double getTotalPay()
     {
         return 0.0;
     }
-
+    
+    
+    @Override //Transactor
+    public boolean validate()
+    {
+        return false;
+    }
+    @Override //Transactor
+    public Invoice perform(){
+        return null;
+    }
 }

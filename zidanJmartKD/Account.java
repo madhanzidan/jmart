@@ -16,13 +16,13 @@ public class Account extends Recognizable implements FileParser
     
     public String toString(){
         return 
-        "Name: "+ name +
+        "name: "+ name +
         "\nemail: " + email +
         "\npassword: " + password ;
     }
     
-    @Override
-    public boolean read (String readAccount)
+    @Override //FileParser
+    public boolean read (String content)
     {
         return false;
     }

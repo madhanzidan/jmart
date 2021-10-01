@@ -6,20 +6,9 @@ public class Store extends Recognizable implements FileParser
     public String address;
     public String phoneNumber;
     
-    @Override
+    @Override //FileParser
     public boolean read (String content){
         return false;
-    }
-    
-    @Override
-    public Object write()
-    {
-        return null;
-    }
-    
-    public Object newInstance (String content)
-    {
-        return null;
     }
     
     public Store (int accountId, String name, String address, String phoneNumber)
@@ -37,9 +26,7 @@ public class Store extends Recognizable implements FileParser
         this.address = address;
         this.phoneNumber = phoneNumber;
     }
-    
-   
-    
+       
     public String toString(){
         return 
         "name: "+ name +

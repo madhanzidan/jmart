@@ -1,10 +1,7 @@
 package zidanJmartKD;
 
-public class Product extends Recognizable
+public class Product extends Recognizable implements FileParser
 {
-   // private static int idCounter = 0;
-    public int id;
-    
     public String name;
     public int weight;
     public boolean conditionUsed;
@@ -33,23 +30,12 @@ public class Product extends Recognizable
         "\nconditionUsed: " + conditionUsed +
         "\npriceTag: " + priceTag +
         "\ncategory: " + category +
-        "\nrating: " + rating +
+        "\nrating: " + rating.getAverage() +
         "\nstoreId: " + storeId;
     }
     
+    @Override //FileParser
     public boolean read (String content){
         return false;
     }
-    
-    
-    public Product(int id, Store store, String name, int weight, boolean conditionUsed, PriceTag priceTag, ProductCategory category)
-    {
-        super(id);
-        this.name = name;
-        this.weight = weight;
-        this.conditionUsed = conditionUsed;
-        this.priceTag = priceTag;
-        this.category = category;        
-    }
-    
 }

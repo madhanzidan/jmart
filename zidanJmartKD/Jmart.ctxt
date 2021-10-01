@@ -2,11 +2,4 @@
 comment0.target=Jmart
 comment1.params=args
 comment1.target=void\ main(java.lang.String[])
-comment2.params=
-comment2.target=Product\ createProduct()
-comment3.params=
-comment3.target=Coupon\ createCoupon()
-comment4.params=
-comment4.target=Product\ create()
-comment4.text=\r\n\ \ \ \ public\ static\ ShipmentDuration\ createShipmentDuration()\r\n\ \ \ \ {\r\n\ \ \ \ \ \ \ \ ShipmentDuration\ domestic\ \=\ new\ ShipmentDuration(ShipmentDuration.INSTANT,\ ShipmentDuration.NEXT_DAY);\ \r\n\ \ \ \ \ \ \ \ return\ domestic;\r\n\ \ \ \ }\r\n
-numComments=5
+numComments=2
