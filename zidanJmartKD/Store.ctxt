@@ -8,4 +8,6 @@ comment3.params=account\ name\ address\ phoneNumber
 comment3.target=Store(Account,\ java.lang.String,\ java.lang.String,\ java.lang.String)
 comment4.params=
 comment4.target=java.lang.String\ toString()
-numComments=5
+comment5.params=
+comment5.target=boolean\ validate()
+numComments=6
