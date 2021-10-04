@@ -1,5 +1,6 @@
 package zidanJmartKD;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class Complaint extends Recognizable implements FileParser
 {
@@ -15,5 +16,13 @@ public class Complaint extends Recognizable implements FileParser
     @Override //FileParser
     public boolean read (String content){
         return false;
+    }
+    
+    public String toString()
+    {
+        SimpleDateFormat SDComplaint
+            = new SimpleDateFormat ("dd/MM/yyy");
+        
+        return "Complaint{date=" + SDComplaint.format(date) + ", desc='" + desc + "'}" ;
     }
 }
