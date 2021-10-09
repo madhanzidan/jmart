@@ -3,7 +3,12 @@ import java.util.*;
 import java.lang.Iterable;
 
 public class Algorithm {
-	public static <T> int count (T[] array, T value){
+	
+	private Algorithm() {
+		
+	}
+	
+	public static <T> int count (T[] array, T value) {
 		return 0;
 	}
 	public static <T> int count (Iterable<T> iterable, T value) {
@@ -41,7 +46,7 @@ public class Algorithm {
 		return false;
 	}
 	
-	public static <T> T find (T[] array, T value){
+	public static <T> T find (T[] array, T value) {
 		return null;
 	}
 	public static <T> T find  (Iterable<T> iterable, T value) {
