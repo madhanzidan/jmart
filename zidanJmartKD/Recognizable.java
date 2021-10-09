@@ -1,6 +1,6 @@
 package zidanJmartKD;
 
-public abstract class Recognizable
+public class Recognizable implements Comparable<Recognizable>
 {
     public final int id;
     
@@ -23,5 +23,26 @@ public abstract class Recognizable
     public boolean equals (Recognizable recognizable)
     {
         return id == recognizable.id;
+    }
+    
+    public static<T extends Recognizable> int setClosingId(Class<T>clazz, int id)
+    {
+    	return 0;
+    }
+    
+    public static<T extends Recognizable> int getClosingId(Class<T>clazz)
+    {
+    	return 0;
+    }
+    
+    @Override
+    public int compareTo (Recognizable recognizable)
+    {
+    	if(this.id == recognizable.id)
+    		return 0;
+    	else if (this.id > recognizable.id)
+    		return 1;
+    	else
+    		return -1;
     }
 }
