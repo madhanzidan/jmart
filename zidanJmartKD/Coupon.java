@@ -1,17 +1,16 @@
 package zidanJmartKD;
 
-public class Coupon extends Recognizable implements FileParser
+public class Coupon extends Recognizable
 {
-    public final String name;
     public final int code;
     public final double cut;
-    public final Type type;
     public final double minimum;
+    public final String name;
+    public final Type type;
     private boolean used;
     
-    public Coupon (int id, String name, int code, Type type, double cut, double minimum)
+    public Coupon (String name, int code, Type type, double cut, double minimum)
     {
-        super(id);
         this.name = name;
         this.code = code;
         this.type = type;
@@ -19,35 +18,30 @@ public class Coupon extends Recognizable implements FileParser
         this.minimum = minimum;
     }
     
-    public boolean isUsed()
+    public double apply (Treasury priceTag)
     {
-        return used;
+        used = true;
+        if (type == Type.DISCOUNT)
+            return priceTag.getAdjustedPrice(priceTag.price, priceTag.discount) - (priceTag.getAdjustedPrice(priceTag.price, priceTag.discount) * cut / 100); 
+        else if (type == Type.REBATE)
+            return priceTag.getAdjustedPrice(priceTag.price, priceTag.discount) - cut;
+        else
+            return 0;
     }
     
-    public boolean canApply (PriceTag priceTag)
+    public boolean canApply (Treasury priceTag)
     {
-        if (priceTag.getAdjustedPrice() >= minimum && used == false)
+        if (priceTag.getAdjustedPrice(priceTag.price, priceTag.discount) >= minimum && used == false)
             return true;
         else
             return false;
     }
     
-    public double apply (PriceTag priceTag)
+    public boolean isUsed()
     {
-        used = true;
-        if (type == Type.DISCOUNT)
-            return priceTag.getAdjustedPrice() - (priceTag.getAdjustedPrice() * cut / 100); 
-        else if (type == Type.REBATE)
-            return priceTag.getAdjustedPrice() - cut;
-        else
-            return 0;
+        return used;
     }
-    
-    @Override //FileParser
-    public boolean read (String content){
-        return false;
-    }
-    
+   
     public static enum Type
     {
         DISCOUNT, REBATE;

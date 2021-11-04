@@ -2,43 +2,27 @@ package zidanJmartKD;
 import java.util.Date;
 import java.util.ArrayList;
 
-public abstract class Invoice extends Recognizable implements FileParser
+public abstract class Invoice extends Recognizable
 {
-    public String date;
-    public int buyerId;
+	public int buyerId;
+	public int complaintId;
+    public Date date;
+    public ArrayList<Record> history;
     public int productId;
-    public int complaintId;
     public Rating rating;
     public Status status;
-    public ArrayList<Record> history;
     
-    protected Invoice (int id, int buyerId, int productId)
+    
+    protected Invoice (int buyerId, int productId)
     {
-        super(id);
         this.buyerId = buyerId;
         this.productId = productId;
-        date = "10 November 1945";
+        //date = "10 November 1945";
         rating = Rating.NONE;
         status = Status.WAITING_CONFIRMATION;
     }
     
     public abstract double getTotalPay();
-    
-    
-    //FileParser
-     @Override
-    public boolean read (String content){
-        return false;
-    }
-    @Override
-    public Object write()
-    {
-        return null;
-    }
-    public Object newInstance (String content)
-    {
-        return null;
-    }
     
     //Enum
     public static enum Rating{
@@ -51,8 +35,8 @@ public abstract class Invoice extends Recognizable implements FileParser
     
     public class Record
     {
+    	public Date date;
+    	public String message;
         public Status status;
-        public Date date;
-        public String message;
     }
 }

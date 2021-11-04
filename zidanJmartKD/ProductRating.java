@@ -2,19 +2,13 @@ package zidanJmartKD;
 
 public class ProductRating
 {
+	private long count;
     private long total;
-    private long count;
 
     public ProductRating()
     {
         total = 0;
         count = 0;
-    }
-    
-    public void insert (int rating)
-    {
-        total += rating;
-        count++;
     }
     
     public double getAverage()
@@ -34,4 +28,11 @@ public class ProductRating
     {
         return total;
     }
+    
+    public void insert (int rating)
+    {
+        total += rating;
+        count++;
+    }
+    
 }

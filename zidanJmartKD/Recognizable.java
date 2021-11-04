@@ -4,10 +4,22 @@ public class Recognizable implements Comparable<Recognizable>
 {
     public final int id;
     
-    protected Recognizable (int id)
+    protected Recognizable ()
     {
-        this.id = id;
+        this.id = 777;
     }
+    
+    @Override
+    public int compareTo (Recognizable recognizable)
+    {
+    	if(this.id == recognizable.id)
+    		return 0;
+    	else if (this.id > recognizable.id)
+    		return 1;
+    	else
+    		return -1;
+    }
+    
     
     public boolean equals (Object newObject)
     {
@@ -25,24 +37,14 @@ public class Recognizable implements Comparable<Recognizable>
         return id == recognizable.id;
     }
     
-    public static<T extends Recognizable> int setClosingId(Class<T>clazz, int id)
-    {
-    	return 0;
-    }
-    
     public static<T extends Recognizable> int getClosingId(Class<T>clazz)
     {
     	return 0;
     }
     
-    @Override
-    public int compareTo (Recognizable recognizable)
+    public static<T extends Recognizable> int setClosingId(Class<T>clazz, int id)
     {
-    	if(this.id == recognizable.id)
-    		return 0;
-    	else if (this.id > recognizable.id)
-    		return 1;
-    	else
-    		return -1;
+    	return 0;
     }
+    
 }
