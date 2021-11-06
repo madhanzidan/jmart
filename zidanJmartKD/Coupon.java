@@ -1,6 +1,6 @@
 package zidanJmartKD;
 
-public class Coupon extends Recognizable
+public class Coupon extends Serializable
 {
     public final int code;
     public final double cut;
@@ -17,21 +17,19 @@ public class Coupon extends Recognizable
         this.cut = cut;
         this.minimum = minimum;
     }
-    
-    public double apply (Treasury priceTag)
+   
+    public double apply (double price, double discount)
     {
         used = true;
         if (type == Type.DISCOUNT)
-            return priceTag.getAdjustedPrice(priceTag.price, priceTag.discount) - (priceTag.getAdjustedPrice(priceTag.price, priceTag.discount) * cut / 100); 
-        else if (type == Type.REBATE)
-            return priceTag.getAdjustedPrice(priceTag.price, priceTag.discount) - cut;
+            return Treasury.getAdjustedPrice(price, discount) - (Treasury.getAdjustedPrice(price, discount) * cut / 100); 
         else
-            return 0;
+            return Treasury.getAdjustedPrice(price, discount) - cut;
     }
     
-    public boolean canApply (Treasury priceTag)
+    public boolean canApply (double price, double discount)
     {
-        if (priceTag.getAdjustedPrice(priceTag.price, priceTag.discount) >= minimum && used == false)
+        if (Treasury.getAdjustedPrice(price, discount) >= minimum && used == false)
             return true;
         else
             return false;

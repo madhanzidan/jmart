@@ -2,15 +2,15 @@ package zidanJmartKD;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-public class Complaint extends Recognizable
+public class Complaint extends Serializable
 {
-	public Date date;
+	public final Date date;
 	public String desc;
 	
     public Complaint (String desc)
     {
         this.desc = desc;
-        Date date = new Date();
+        date = new Date();
     }
     
     public String toString()

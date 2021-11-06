@@ -2,7 +2,7 @@ package zidanJmartKD;
 import java.util.Date;
 import java.util.ArrayList;
 
-public abstract class Invoice extends Recognizable
+public abstract class Invoice extends Serializable
 {
 	public int buyerId;
 	public int complaintId;

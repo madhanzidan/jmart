@@ -8,7 +8,7 @@ public class Treasury
     public double discount;
     public double price;
     
-    public double getDiscountedPrice(double price, double discount)
+    public static double getDiscountedPrice(double price, double discount)
     {
         if (discount > 100.0)
             discount = 100.0;
@@ -18,7 +18,7 @@ public class Treasury
         return price - (price * discount / 100);
     }
     
-    public double getAdminFee(double price, double discount)
+    public static double getAdminFee(double price, double discount)
     {
        if (getDiscountedPrice(price, discount) <= BOTTOM_PRICE)
            return BOTTOM_FEE;
@@ -26,7 +26,7 @@ public class Treasury
            return COMMISSION_MULTIPLIER * getDiscountedPrice(price, discount);
     }
     
-    public double getAdjustedPrice(double price, double discount)
+    public static double getAdjustedPrice(double price, double discount)
     {
         return getDiscountedPrice(price, discount) + getAdminFee(price, discount);
     }

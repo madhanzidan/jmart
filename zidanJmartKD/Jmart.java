@@ -3,7 +3,7 @@ package zidanJmartKD;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 import com.google.gson.*;
 
 public class Jmart
@@ -17,7 +17,32 @@ public class Jmart
 	
     public static void main(String[] args) 
     {
-    	String filepath = "C:/Kuliah Semester 5/Java/jmart/city.json";
+    	try {
+    		List<Product> list = read("jmart/randomProductList.json");
+        	List<Product> filtered = filterByPrice(list, 0.0, 2000.0);
+        	filtered.forEach(product -> System.out.println(product.price));
+    	}
+    	catch (Throwable t)
+    	{
+    		t.printStackTrace();
+    	}
+    
+    } 
+    
+    public static List<Product> filterByCategory (List<Product> list, ProductCategory category)
+    {
+    	List<Product> filteredList = new ArrayList<>();
+    	
+    	for(Product lists : list) 
+    	{
+    		if (lists.category == category) 
+    		{
+    			filteredList.add(lists);
+    		}
+    	}
+    	return filteredList;
+    	/*
+    	String filepath = "jmart/randomProductList.json";
     	Gson gson = new Gson();
     	try
     	{
@@ -31,6 +56,16 @@ public class Jmart
     	catch (IOException e)
     	{
     		e.printStackTrace();
-    	}
+    	}*/
+    }
+    public static List<Product> filterByPrice (List<Product> list, double minPrice, double maxPrice)
+    {
+    	return null;
+    }
+    public static List<Product> read (String filepath)
+    {
+    	//final JsonReader reader = new JsonReader (new FileReader(filepath));
+    	return null;
+    	
     }
 }

@@ -28,3 +28,5 @@
 /MultiDuration.class
 /Shipment$Plan.class
 /Jmart$Country.class
+/Transaction.class
+/Serializable.class
