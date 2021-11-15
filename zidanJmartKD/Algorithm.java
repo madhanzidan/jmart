@@ -467,4 +467,83 @@ public class Algorithm {
 		}
 		return minimum;
 	}
+	//List<T>
+	public static <T> List<T> paginate (T[] array, int page, int pageSize, Predicate<T> pred)
+	{
+		List<T> paginationList = new ArrayList<>();
+		if((pageSize < 0 || pageSize >= array.length) || (page < 0 || page >= array.length/pageSize))
+		{
+			throw new IllegalArgumentException();
+		}
+    	
+    	for (T Lists : array)
+    	{
+    		if (pred.predicate(Lists))
+    			paginationList.add(Lists);
+    	}
+    	
+    	
+    	int fromIndex = page * pageSize;
+    	
+     	if (paginationList == null || paginationList.size() <= fromIndex)
+    		return Collections.emptyList();
+    	
+    	return paginationList.subList(fromIndex, Math.min(fromIndex + pageSize, paginationList.size()));	
+	}
+	
+	public static <T> List<T> paginate (Iterable<T> iterable, int page, int pageSize, Predicate<T> pred)
+	{
+		List<T> paginationList = new ArrayList<>();
+		Iterator<T> iterator = iterable.iterator();
+		
+		int iteratorSize = ((Collection<?>) iterable).size();
+		
+		if((pageSize < 0 || pageSize >= iteratorSize) || (page < 0 || page >= iteratorSize/pageSize))
+		{
+			throw new IllegalArgumentException();
+		}
+		
+		while (iterator.hasNext())
+		{
+			T index = iterator.next();
+			if (pred.predicate(index));
+				paginationList.add(index);
+		}
+			 
+		int fromIndex = page * pageSize;
+		
+    	if (paginationList == null || paginationList.size() <= fromIndex)
+    		return Collections.emptyList();
+    	
+    	return paginationList.subList(fromIndex, Math.min(fromIndex + pageSize, paginationList.size()));
+	}
+	
+	
+	public static <T> List<T> paginate (Iterator<T> iterator, int page, int pageSize, Predicate<T> pred)
+	{
+		List<T> paginationList = new ArrayList<>();
+		int iteratorSize = ((Collection<?>) iterator).size();
+		
+		if((pageSize < 0 || pageSize >= iteratorSize) || (page < 0 || page >= iteratorSize/pageSize))
+		{
+			throw new IllegalArgumentException();
+		}
+		while (iterator.hasNext())
+		{
+			T index = iterator.next();
+			if (pred.predicate(index));
+				paginationList.add(index);
+		}
+		
+		int fromIndex = page * pageSize;
+		
+    	if (paginationList == null || paginationList.size() <= fromIndex)
+    		return Collections.emptyList();
+    	
+    	return paginationList.subList(fromIndex, Math.min(fromIndex + pageSize, paginationList.size()));
+		
+	}
+	
 }
+
+

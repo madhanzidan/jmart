@@ -1,36 +1,34 @@
 package zidanJmartKD;
 import java.util.Date;
-import java.util.ArrayList;
+
 
 public abstract class Invoice extends Serializable
 {
 	public int buyerId;
 	public int complaintId;
-    public Date date;
-    public ArrayList<Record> history;
+    public final Date date;
     public int productId;
     public Rating rating;
-    public Status status;
+    
     
     
     protected Invoice (int buyerId, int productId)
     {
-        this.buyerId = buyerId;
+		this.buyerId = buyerId;
         this.productId = productId;
-        //date = "10 November 1945";
+        date = new Date();
+        complaintId = -1;
         rating = Rating.NONE;
-        status = Status.WAITING_CONFIRMATION;
     }
     
-    public abstract double getTotalPay();
+    public abstract double getTotalPay(Product product);
     
     //Enum
-    public static enum Rating{
-        NONE, BAD, NEUTRAL, GOOD
-    }
     public static enum Status{
-        WAITING_CONFIRMATION, CANCELLED, ON_PROGRESS, ON_DELIVERY,
-        COMPLAINT, FINISHED, FAILED
+        CANCELLED, COMPLAINT, DELIVERED, FAILED, FINISHED, ON_DELIVERY, ON_PROGRESS, WAITING_CONFIRMATION;
+    }
+    public static enum Rating{
+        BAD, GOOD, NEUTRAL, NONE;
     }
     
     public class Record

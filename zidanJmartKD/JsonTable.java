@@ -1,6 +1,7 @@
 package zidanJmartKD;
 
 import java.io.*;
+import java.util.Collections;
 import java.util.Vector;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
@@ -13,32 +14,44 @@ public class JsonTable<T> extends Vector{
 	public JsonTable (Class<T> clazz, String filepath) throws IOException
 	{
 		this.filepath = filepath;
-		@SuppressWarnings("unchecked")
-		Class<T[]> arrayType = (Class<T[]>) Array.newInstance(clazz, 0).getClass();
-		T[] loaded = readJson (arrayType, filepath);
-		
-		for(T index:loaded)
-			this.add(index);
-		
-		String filewrite = "C:\\Kuliah Semester 5\\Java\\jmart\\filewrite.json";
-		writeJson(loaded, filewrite);
+		try
+		{
+			@SuppressWarnings("unchecked")
+			Class<T[]> arrayType = (Class<T[]>) Array.newInstance(clazz, 0).getClass();
+			T[] loaded = readJson (arrayType, filepath);
+			
+			if(loaded != null)
+			{
+				Collections.addAll(this, loaded);
+			}
+		}
+		catch (FileNotFoundException e)
+		{
+			File file = new File(filepath);
+			File file1 = file.getParentFile();
+			if (file1 != null)
+				file1.mkdirs();
+			file.createNewFile();
+		}
 	}
 	
 	public static <T> T readJson (Class<T> clazz, String filepath) throws FileNotFoundException
 	{
-		final JsonReader reader = new JsonReader (new FileReader(filepath));
-		return gson.fromJson(reader, clazz);
+		JsonReader reader = new JsonReader (new FileReader(filepath));
+		T obj = gson.fromJson(reader, clazz);
+		return obj;
 	}
 	
 	public void writeJson () throws IOException
 	{
-		final FileWriter writer = new FileWriter (this.filepath);
-		gson.toJson(gson, writer);
+		writeJson (this, this.filepath);
 	}
 	
 	public static void writeJson (Object object, String filepath) throws IOException
 	{
-		final FileWriter writer = new FileWriter(filepath);
-		gson.toJson(object, writer);
+		FileWriter fileWriter = new FileWriter(filepath);
+		String s = gson.toJson(object);
+		fileWriter.write(s);
+		fileWriter.close();
 	}
 }

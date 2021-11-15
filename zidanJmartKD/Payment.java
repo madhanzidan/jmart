@@ -1,7 +1,11 @@
 package zidanJmartKD;
 
+import java.util.Date;
+import java.util.ArrayList;
+
 public class Payment extends Invoice
 {
+	ArrayList<Record> history = new ArrayList<>();
 	public int productCount;
     public Shipment shipment;
     
@@ -12,9 +16,24 @@ public class Payment extends Invoice
       this.shipment = shipment;
     }
     
-    public double getTotalPay()
+    @Override
+    public double getTotalPay(Product product)
     {
-        return 0.0;
+        return product.price - (product.price*product.discount);
     }
     
+    public static class Record
+    {
+    	public final Date date;
+    	public String message;
+    	public Status status;
+    
+    
+	    public Record (Status status, String message)
+	    {
+	    	this.status = status;
+	    	this.message = message;
+	    	date = new Date();
+	    }
+    }
 }
