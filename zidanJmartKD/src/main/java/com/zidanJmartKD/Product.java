@@ -1,5 +1,7 @@
 package com.zidanJmartKD;
 
+import com.zidanJmartKD.dbjson.Serializable;
+
 public class Product extends Serializable
 {
     public int accountId;

@@ -1,4 +1,4 @@
-package com.zidanJmartKD;
+package com.zidanJmartKD.dbjson;
 
 import java.io.*;
 import java.util.Collections;

@@ -1,5 +1,7 @@
 package com.zidanJmartKD;
 
+import com.zidanJmartKD.dbjson.Serializable;
+
 public class Coupon extends Serializable
 {
     public final int code;

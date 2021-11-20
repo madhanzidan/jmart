@@ -1,4 +1,6 @@
 package com.zidanJmartKD;
+import com.zidanJmartKD.dbjson.Serializable;
+
 import java.util.Date;
 
 
