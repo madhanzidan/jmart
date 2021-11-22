@@ -7,7 +7,7 @@ import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import java.lang.reflect.Array;
 
-public class JsonTable<T> extends Vector{
+public class JsonTable<T> extends Vector<T>{
 	public final String filepath;
 	private static final Gson gson = new Gson();
 	

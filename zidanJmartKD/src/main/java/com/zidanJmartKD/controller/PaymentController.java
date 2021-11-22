@@ -1,23 +1,31 @@
 package com.zidanJmartKD.controller;
 
+import com.zidanJmartKD.ObjectPoolThread;
 import com.zidanJmartKD.Payment;
+import com.zidanJmartKD.dbjson.JsonAutowired;
 import com.zidanJmartKD.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-public class PaymentController implements BasicGetController<Payment>{
+@RequestMapping("/payment")
+class PaymentController implements BasicGetController<Payment>{
     public static long DELIVERED_LIMIT_MS = 100;
     public static long ON_DELIVERY_LIMIT_MS = 100;
     public static long ON_PROGRESS_LIMIT_MS = 100;
     public static long WAITING_CONF_LIMIT_MS = 100;
 
+    @JsonAutowired(filepath = "C:/Kuliah Semester 5/Java/jmart/json", value = Payment.class)
+    public static JsonTable<Payment> paymentTable;
+    public static ObjectPoolThread<Payment> poolThread;
+
     @PostMapping("/create")
     boolean accept (int id){
-        return true;
+        return false;
     }
 
     @PostMapping("/create")
     boolean cancel (int id){
-        return true;
+        return false;
     }
 
     @PostMapping("/create")
@@ -28,12 +36,12 @@ public class PaymentController implements BasicGetController<Payment>{
 
     @Override
     public JsonTable<Payment> getJsonTable() {
-        return null;
+        return paymentTable;
     }
 
     @PostMapping("/create")
     boolean submit (int id, String receipt){
-        return true;
+        return false;
     }
 
     private static boolean timekeeper (Payment payment){
