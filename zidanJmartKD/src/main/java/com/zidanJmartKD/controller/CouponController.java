@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @RequestMapping("/coupon")
 public class CouponController implements BasicGetController<Coupon> {
-    @JsonAutowired(filepath = "C:/Kuliah Semester 5/Java/jmart/json", value = Coupon.class)
+    @JsonAutowired(filepath = "C:/Kuliah Semester 5/Java/jmart/file.json", value = Coupon.class)
     public static JsonTable<Coupon> couponTable;
 
     public JsonTable<Coupon> getJsonTable ()
@@ -24,29 +24,18 @@ public class CouponController implements BasicGetController<Coupon> {
     @GetMapping("/{id}/isUsed")
     boolean isUsed (@PathVariable int id)
     {
-        for (Coupon coupon :couponTable)
-        {
-            if(coupon.id == id)
-                return coupon.isUsed();
-        }
-        return false;
+        return Algorithm.<Coupon>find(getJsonTable(), (coupon -> coupon.id == id)).used;
     }
 
     @GetMapping("/{id}/canApply")
     boolean canApply (@PathVariable int id, @RequestParam double price, @RequestParam double discount)
     {
-        Predicate<Coupon> couponPredicate = applicable -> applicable.id == id;
-        return Objects.requireNonNull(Algorithm.find(getJsonTable(), couponPredicate)).canApply(price, discount);
+        return Algorithm.<Coupon>find(getJsonTable(), (coupon -> coupon.id == id)).canApply(price, discount);
     }
 
 
-    @GetMapping("/getAvalable")
-    boolean getAvailable (int page, int pageSize)
-    {
-        return false;
+    @GetMapping("/getAvailable")
+    List<Coupon> getAvailable(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "2") int pageSize) {
+        return Algorithm.paginate(couponTable.iterator(), page, pageSize, (coupon -> !coupon.used));
     }
-
-
-
-
 }

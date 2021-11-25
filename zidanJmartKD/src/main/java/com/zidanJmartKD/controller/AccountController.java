@@ -20,7 +20,7 @@ class AccountController implements BasicGetController<Account>
     public static final Pattern REGEX_PATTERN_EMAIL = Pattern.compile(REGEX_EMAIL);
     public static final Pattern REGEX_PATTERN_PASSWORD  = Pattern.compile(REGEX_PASSWORD);
 
-    @JsonAutowired(filepath = "C:/Kuliah Semester 5/Java/jmart", value = Account.class)
+    @JsonAutowired(filepath = "C:/Kuliah Semester 5/Java/jmart/file.json", value = Account.class)
     public static JsonTable<Account> accountTable;
 
     public JsonTable<Account> getJsonTable ()
@@ -28,11 +28,21 @@ class AccountController implements BasicGetController<Account>
         return accountTable;
     }
 
-
     @PostMapping("/login")
     Account login(String email, String password)
     {
-
+        String hashedPassword;
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] bytes = md.digest(password.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++)
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16). substring(1));
+            hashedPassword = sb.toString();
+        }
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
         for(Account account : accountTable)
         {
             if (account.email.equals(email) && account.password.equals(password))
@@ -45,35 +55,31 @@ class AccountController implements BasicGetController<Account>
     String index() { return "account page"; }
 
     @PostMapping("/register")
-    Account register
-            (
-                    @RequestParam String name,
-                    @RequestParam String email,
-                    @RequestParam String password
-            )
+    Account register(@RequestParam String name, @RequestParam String email, @RequestParam String password)
     {
+        String hashedPassword;
         try {
-            String hashedPassword;
             MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] messageDigest = md.digest(password.getBytes());
-            BigInteger no = new BigInteger(1, messageDigest);
-            hashedPassword = no.toString(16);
-            while (hashedPassword.length() < 32) {
-                hashedPassword = "0" + hashedPassword;
-            }
+            byte[] bytes = md.digest(password.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++)
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16). substring(1));
+            hashedPassword = sb.toString();
         }
         catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-
-        if(!name.isBlank() && REGEX_PATTERN_EMAIL.matcher(email).find() && REGEX_PATTERN_PASSWORD.matcher(password).find() && !Algorithm.exists(accountTable.toArray(), email));
+        if(!name.isBlank() && REGEX_PATTERN_EMAIL.matcher(email).find() &&
+                REGEX_PATTERN_PASSWORD.matcher(password).find() &&
+                !Algorithm.<Account>exists(getJsonTable(), (account -> account.email.equals(email))))
             return new Account(name, email, password, 0);
+        return null;
     }
 
     @PostMapping("/{id}/registerStore")
     Store registerStore
             (
-                    @RequestParam int id,
+                    @PathVariable int id,
                     @RequestParam String name,
                     @RequestParam String address,
                     @RequestParam String phoneNumber

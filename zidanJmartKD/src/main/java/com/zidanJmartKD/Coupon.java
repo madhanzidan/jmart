@@ -9,7 +9,7 @@ public class Coupon extends Serializable
     public final double minimum;
     public final String name;
     public final Type type;
-    private boolean used;
+    public boolean used;
     
     public Coupon (String name, int code, Type type, double cut, double minimum)
     {

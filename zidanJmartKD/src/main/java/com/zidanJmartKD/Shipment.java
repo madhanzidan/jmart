@@ -13,14 +13,14 @@ public class Shipment
     public static final Plan REGULER = new Plan((byte)(1 << 3));
     public static final Plan KARGO = new Plan((byte)(1 << 4));
     public String address;
-    public int Cost;
+    public int cost;
     public byte plan;
     public String receipt;
     
     public Shipment(String address, int Cost, byte plan, String receipt)
     {
         this.address = address;
-        this.Cost = Cost;
+        this.cost = cost;
         this.plan = plan;
         this.receipt = receipt;
     }
