@@ -81,8 +81,6 @@ class PaymentController implements BasicGetController<Payment>{
         }
         else
             return false;
-
-
     }
 
     @PostMapping("{id}/submit")
