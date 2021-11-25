@@ -3,11 +3,16 @@ package com.zidanJmartKD.controller;
 import com.zidanJmartKD.*;
 import com.zidanJmartKD.dbjson.JsonAutowired;
 import com.zidanJmartKD.dbjson.JsonTable;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+
+import static com.zidanJmartKD.Algorithm.find;
+import static com.zidanJmartKD.controller.AccountController.accountTable;
+import static com.zidanJmartKD.controller.ProductController.productTable;
 
 @RequestMapping("/payment")
 class PaymentController implements BasicGetController<Payment>{
@@ -20,57 +25,83 @@ class PaymentController implements BasicGetController<Payment>{
     public static JsonTable<Payment> paymentTable;
     public static ObjectPoolThread<Payment> poolThread;
 
-    @PostMapping("/create")
-    Payment create (@RequestParam int buyerId, @RequestParam int productId, @RequestParam String shipmentAddress, @RequestParam byte shipmentPlan)
+    @PostMapping("create")
+    Payment create (@RequestParam int buyerId, @RequestParam int productId,@RequestParam int productCount, @RequestParam String shipmentAddress, @RequestParam byte shipmentPlan)
     {
-        Account acc = Algorithm.<Account>find(AccountController.accountTable, account -> account.id ==buyerId);
-        Product prod = Algorithm.<Product>find(ProductController.productTable, product -> product.id == productId);
-        Payment pay = Algorithm.<Payment>find(getJsonTable(), payment -> payment.buyerId == buyerId && payment.productId == productId);
+        Predicate<Account> findAcc = accFound -> accFound.id == buyerId;
+        Predicate<Product> findProd = prodFound -> prodFound.id == productId;
 
-        if (Algorithm.<Account>exists(AccountController.accountTable, acc) && Algorithm.<Product>exists(ProductController.productTable, prod)
-            && pay.getTotalPay(prod) <= acc.balance && pay.shipment.cost == 0 && pay.shipment.receipt == null)
+        Product prod = find(productTable, findProd);
+        Account acc = find(accountTable, findAcc);
+        Payment pay = Algorithm.<Payment>find(paymentTable, (Predicate<Payment>) pred -> prod.id == buyerId && acc.id == buyerId);
+        Shipment shipment = new Shipment(shipmentAddress, 0, shipmentPlan, null);
+        pay.shipment = shipment;
+
+        if (Algorithm.exists(accountTable, findAcc) &&
+                Algorithm.exists(productTable, findProd) &&
+                acc.balance >= prod.price * productCount)
         {
-            acc.balance -= pay.getTotalPay(prod);
+            acc.balance -= pay.getTotalPay(prod) * productCount;
             pay.history.add(new Payment.Record(Invoice.Status.WAITING_CONFIRMATION, "Menunggu konfirmasi"));
             getJsonTable().add(pay);
             poolThread.add(pay);
-            return pay;
         }
-        return null;
+        else
+            return null;
+        return pay;
     }
 
-    @PostMapping("/create")
+    @PostMapping("{id}/accept")
     boolean accept (@RequestParam int id){
-        Payment pay = Algorithm.<Payment>find(getJsonTable(), payment -> payment.id == id);
-        if (pay.history.get(pay.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION)
+        Predicate<Payment> findPay = payFound -> payFound.id == id;
+        Algorithm.find(paymentTable, findPay);
+        Payment pay = Algorithm.find(paymentTable, findPay);
+
+        if (Algorithm.exists(paymentTable, findPay) &&
+            pay.history.get(pay.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION)
         {
             pay.history.add(new Payment.Record(Invoice.Status.ON_PROGRESS, "Dalam proses"));
             return true;
         }
-        return false;
+        else
+            return false;
     }
 
-    @PostMapping("/create")
-    boolean cancel (@RequestParam int id){
-        Payment pay = Algorithm.<Payment>find(getJsonTable(), payment -> payment.id == id);
-        if (pay.history.get(pay.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION)
+    @PostMapping("{id}/cancel")
+    boolean cancel (@PathVariable int id){
+        Predicate<Payment> findPay = payFound -> payFound.id == id;
+        Algorithm.find(paymentTable, findPay);
+        Payment pay = Algorithm.find(paymentTable, findPay);
+
+        if (Algorithm.exists(paymentTable, findPay) &&
+                pay.history.get(pay.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION)
         {
             pay.history.add(new Payment.Record(Invoice.Status.CANCELLED, "Dibatalkan"));
             return true;
         }
-        return false;
+        else
+            return false;
+
+
     }
 
-    @PostMapping("/create")
-    boolean submit (@RequestParam int id, @RequestParam String receipt){
-        Payment pay = Algorithm.<Payment>find(getJsonTable(), payment -> payment.id == id);
-        if (pay.history.get(pay.history.size()-1).status == Invoice.Status.ON_PROGRESS && !pay.shipment.receipt.isBlank())
+    @PostMapping("{id}/submit")
+    boolean submit (@PathVariable int id, @RequestParam String receipt)
+    {
+        Predicate<Payment> findPay = payFound -> payFound.id == id;
+        Algorithm.find(paymentTable, findPay);
+        Payment pay = Algorithm.find(paymentTable, findPay);
+
+        if (Algorithm.exists(paymentTable, findPay) &&
+                pay.history.get(pay.history.size()-1).status == Invoice.Status.ON_PROGRESS
+                && !pay.shipment.receipt.isBlank())
         {
             pay.shipment.receipt = receipt;
-            pay.history.add(new Payment.Record(Invoice.Status.ON_DELIVERY, "Dalam pengiriman"));
+            pay.history.add(new Payment.Record(Invoice.Status.ON_DELIVERY, "Dalam proses pengiriman"));
             return true;
         }
-        return false;
+        else
+            return false;
     }
 
     @Override

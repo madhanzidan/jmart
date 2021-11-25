@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/account")
-class AccountController implements BasicGetController<Account>
+public class AccountController implements BasicGetController<Account>
 {
     public static final String REGEX_EMAIL = "^\\w+([\\.]?[&\\*~\\w+])*@\\w+([\\.-]?)*(\\.\\w{2,3})+$";
     public static final String REGEX_PASSWORD = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$(?=\\S+$)";
