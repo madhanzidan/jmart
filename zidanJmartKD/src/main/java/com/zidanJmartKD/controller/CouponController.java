@@ -3,17 +3,15 @@ package com.zidanJmartKD.controller;
 import com.zidanJmartKD.*;
 import com.zidanJmartKD.dbjson.JsonAutowired;
 import com.zidanJmartKD.dbjson.JsonTable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
 
+@RestController
 @RequestMapping("/coupon")
 public class CouponController implements BasicGetController<Coupon> {
-    @JsonAutowired(filepath = "C:/Kuliah Semester 5/Java/jmart/file.json", value = Coupon.class)
+    @JsonAutowired(filepath = "C:\\Kuliah Semester 5\\Java\\jmart\\Coupon.json", value = Coupon.class)
     public static JsonTable<Coupon> couponTable;
 
     public JsonTable<Coupon> getJsonTable ()

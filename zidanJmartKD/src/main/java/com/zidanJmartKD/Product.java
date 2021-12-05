@@ -5,13 +5,14 @@ import com.zidanJmartKD.dbjson.Serializable;
 public class Product extends Serializable
 {
     public int accountId;
-    public ProductCategory category;
-    public boolean conditionUsed;
-    public double discount;
     public String name;
-    public double price;
-    public byte shipmentPlans;
     public int weight;
+    public boolean conditionUsed;
+    public double price;
+    public double discount;
+    public ProductCategory category;
+    public byte shipmentPlans;
+
     
     
     public Product(int accountId, String name, int weight, boolean conditionUsed, double price, double discount, ProductCategory category, byte shipmentPlans)
@@ -28,9 +29,9 @@ public class Product extends Serializable
     
     public String toString(){
         return 
-        "accountId " + accountId +
-        "\nName: "+ name +
-        "\nWeight: " + weight +
+        "accountId: " + accountId +
+        "\nname: "+ name +
+        "\nweight: " + weight +
         "\nconditionUsed: " + conditionUsed +
         "\nprice: " + price +
         "\ndiscount " + discount +

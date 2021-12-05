@@ -3,10 +3,7 @@ package com.zidanJmartKD.controller;
 import com.zidanJmartKD.*;
 import com.zidanJmartKD.dbjson.JsonAutowired;
 import com.zidanJmartKD.dbjson.JsonTable;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -14,6 +11,7 @@ import static com.zidanJmartKD.Algorithm.find;
 import static com.zidanJmartKD.controller.AccountController.accountTable;
 import static com.zidanJmartKD.controller.ProductController.productTable;
 
+@RestController
 @RequestMapping("/payment")
 class PaymentController implements BasicGetController<Payment>{
     public static long DELIVERED_LIMIT_MS = 100;
@@ -21,7 +19,7 @@ class PaymentController implements BasicGetController<Payment>{
     public static long ON_PROGRESS_LIMIT_MS = 100;
     public static long WAITING_CONF_LIMIT_MS = 100;
 
-    @JsonAutowired(filepath = "C:/Kuliah Semester 5/Java/jmart/file.json", value = Payment.class)
+    @JsonAutowired(filepath = "C:\\Kuliah Semester 5\\Java\\jmart\\Payment.json", value = Payment.class)
     public static JsonTable<Payment> paymentTable;
     public static ObjectPoolThread<Payment> poolThread;
 

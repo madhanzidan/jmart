@@ -16,11 +16,11 @@ import java.util.regex.Pattern;
 public class AccountController implements BasicGetController<Account>
 {
     public static final String REGEX_EMAIL = "^\\w+([\\.]?[&\\*~\\w+])*@\\w+([\\.-]?)*(\\.\\w{2,3})+$";
-    public static final String REGEX_PASSWORD = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$(?=\\S+$)";
+    public static final String REGEX_PASSWORD = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$)(?=.*[A-Z]).{8,}$";
     public static final Pattern REGEX_PATTERN_EMAIL = Pattern.compile(REGEX_EMAIL);
     public static final Pattern REGEX_PATTERN_PASSWORD  = Pattern.compile(REGEX_PASSWORD);
 
-    @JsonAutowired(filepath = "C:/Kuliah Semester 5/Java/jmart/file.json", value = Account.class)
+    @JsonAutowired(filepath = "C:\\Kuliah Semester 5\\Java\\jmart\\Account.json", value = Account.class)
     public static JsonTable<Account> accountTable;
 
     public JsonTable<Account> getJsonTable ()
@@ -29,7 +29,7 @@ public class AccountController implements BasicGetController<Account>
     }
 
     @PostMapping("/login")
-    Account login(String email, String password)
+    Account login(@RequestParam String email, @RequestParam String password)
     {
         String hashedPassword;
         try {
@@ -45,7 +45,7 @@ public class AccountController implements BasicGetController<Account>
         }
         for(Account account : accountTable)
         {
-            if (account.email.equals(email) && account.password.equals(password))
+            if (account.email.equals(email) && account.password.equals(hashedPassword))
                 return account;
         }
         return null;
@@ -72,36 +72,30 @@ public class AccountController implements BasicGetController<Account>
         if(!name.isBlank() && REGEX_PATTERN_EMAIL.matcher(email).find() &&
                 REGEX_PATTERN_PASSWORD.matcher(password).find() &&
                 !Algorithm.<Account>exists(getJsonTable(), (account -> account.email.equals(email))))
-            return new Account(name, email, password, 0);
+				{
+					getJsonTable().add(new Account(name, email, hashedPassword, 0));
+					return new Account(name, email, hashedPassword, 0);
+				}
         return null;
     }
 
     @PostMapping("/{id}/registerStore")
-    Store registerStore
-            (
-                    @PathVariable int id,
-                    @RequestParam String name,
-                    @RequestParam String address,
-                    @RequestParam String phoneNumber
-            )
+    Store registerStore(@PathVariable int id, @RequestParam String name, @RequestParam String address, @RequestParam String phoneNumber)
     {
-        if(Algorithm.exists(getJsonTable().toArray(), id) || !Algorithm.exists(getJsonTable().toArray(), name)) {
-            return new Store(name, address, phoneNumber, 0);
-        }
-        return null;
+        //if(Algorithm.exists(getJsonTable().toArray(), id) || !Algorithm.exists(getJsonTable().toArray(), name)) {
+            Account acc = Algorithm.<Account>find(getJsonTable(), (account -> account.id == id && account.store == null));
+            acc.store = new Store(name, address, phoneNumber, 0);
+            return acc.store;
+        //}
+       // return null;
     }
 
     @PostMapping("/{id}/topUp")
     boolean topUp (@PathVariable int id, @RequestParam double balance)
     {
-
-        for(Account account : accountTable) {
-            if(account.id == id) {
-                account.balance += balance;
-                return true;
-            }
-        }
-        return false;
+        Account acc = Algorithm.<Account>find(getJsonTable(), (account -> account.id == id));
+        acc.balance += balance;
+        return Algorithm.<Account>exists(getJsonTable(), (account -> account.id == id));
     }
 
 }

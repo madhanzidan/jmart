@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 public class Account extends Serializable
 {
 	public static final String REGEX_EMAIL = "^\\w+([\\.]?[&\\*~\\w+])*@\\w+([\\.-]?)*(\\.\\w{2,3})+$";
-	public static final String REGEX_PASSWORD = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$(?=\\S+$)";
+	public static final String REGEX_PASSWORD = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$)(?=.*[A-Z]).{8,}$";
 	public double balance;
 	public String email;
     public String name;
@@ -21,6 +21,7 @@ public class Account extends Serializable
         this.email = email;
         this.password = password;
         this.balance = balance;
+        store = null;
     }
     
     public boolean validate()

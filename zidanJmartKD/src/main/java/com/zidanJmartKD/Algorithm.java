@@ -543,6 +543,21 @@ public class Algorithm {
     	return paginationList.subList(fromIndex, Math.min(fromIndex + pageSize, paginationList.size()));
 		
 	}
+
+	public static<T> List<T> paginate(List<T> list, int page, int pageSize, Predicate<T> pred){
+		List<T> newPage = new ArrayList<T>();
+		for(T index: list) {
+			if(pred.predicate(index))
+				newPage.add(index);
+		}
+		if((pageSize < 0) || (page < 0 || page > newPage.size()/pageSize)) {
+			throw new IllegalArgumentException();
+		}
+		int startIndex = page * pageSize;
+		if(newPage == null || newPage.size() <= startIndex)
+			return Collections.emptyList();
+		return newPage.subList(startIndex, Math.min(startIndex + pageSize, newPage.size()));
+	}
 	
 }
 
