@@ -1,5 +1,11 @@
 package com.zidanJmartKD.controller;
 
+/**
+ * @author Zidan Ramadhan
+ * @author zidan.ramadhan@ui.ac.id
+ * @version 1.0
+ */
+
 import com.zidanJmartKD.*;
 import com.zidanJmartKD.dbjson.JsonAutowired;
 import com.zidanJmartKD.dbjson.JsonTable;
@@ -21,11 +27,28 @@ class PaymentController implements BasicGetController<Payment>{
 
     @JsonAutowired(filepath = "C:\\Kuliah Semester 5\\Java\\jmart\\Payment.json", value = Payment.class)
     public static JsonTable<Payment> paymentTable;
-    public static ObjectPoolThread<Payment> poolThread;
+    public static ObjectPoolThread<Payment> poolThread = new ObjectPoolThread<>(PaymentController::timekeeper);
 
     @PostMapping("create")
     Payment create (@RequestParam int buyerId, @RequestParam int productId,@RequestParam int productCount, @RequestParam String shipmentAddress, @RequestParam byte shipmentPlan)
     {
+        Payment pay = new Payment(buyerId, productId, productCount, new Shipment(shipmentAddress, 0, shipmentPlan, null));
+        Account acc = Algorithm.<Account>find(AccountController.accountTable, account -> account.id == buyerId);
+        Product prod = Algorithm.<Product>find(ProductController.productTable, product -> product.id == productId);
+        if (Algorithm.<Account>exists(AccountController.accountTable, acc)
+                && Algorithm.<Product>exists(ProductController.productTable, prod)
+                && pay.getTotalPay(prod) <= acc.balance
+                && pay.shipment.cost == 0
+                && pay.shipment.receipt == null) {
+            acc.balance -= pay.getTotalPay(prod);
+            pay.history.add(new Payment.Record(Invoice.Status.WAITING_CONFIRMATION, "Waiting for confirmation"));
+            getJsonTable().add(pay);
+            poolThread.add(pay);
+            return pay;
+        }
+        return null;
+
+        /*
         Predicate<Account> findAcc = accFound -> accFound.id == buyerId;
         Predicate<Product> findProd = prodFound -> prodFound.id == productId;
 
@@ -46,7 +69,7 @@ class PaymentController implements BasicGetController<Payment>{
         }
         else
             return null;
-        return pay;
+        return pay;*/
     }
 
     @PostMapping("{id}/accept")

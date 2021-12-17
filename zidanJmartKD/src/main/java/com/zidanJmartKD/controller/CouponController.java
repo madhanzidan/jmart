@@ -1,5 +1,11 @@
 package com.zidanJmartKD.controller;
 
+/**
+ * @author Zidan Ramadhan
+ * @author zidan.ramadhan@ui.ac.id
+ * @version 1.0
+ */
+
 import com.zidanJmartKD.*;
 import com.zidanJmartKD.dbjson.JsonAutowired;
 import com.zidanJmartKD.dbjson.JsonTable;

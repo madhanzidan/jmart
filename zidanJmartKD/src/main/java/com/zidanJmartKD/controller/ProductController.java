@@ -1,5 +1,11 @@
 package com.zidanJmartKD.controller;
 
+/**
+ * @author Zidan Ramadhan
+ * @author zidan.ramadhan@ui.ac.id
+ * @version 1.0
+ */
+
 import com.zidanJmartKD.*;
 import com.zidanJmartKD.dbjson.JsonAutowired;
 import com.zidanJmartKD.dbjson.JsonTable;
@@ -48,7 +54,7 @@ public class ProductController implements BasicGetController<Product> {
     @GetMapping("/{id}/store")
     List<Product> getProductByStore (@PathVariable int id, @RequestParam int page, @RequestParam int pageSize)
     {
-        Predicate<Product> pred = product -> product.accountId == id;
+        Predicate<Product> pred = product -> true;
         List<Product> list = new ArrayList<>();
         //return Algorithm.paginate(this.getJsonTable().iterator(), page, pageSize, pred);
         for(Product product : getJsonTable()) {

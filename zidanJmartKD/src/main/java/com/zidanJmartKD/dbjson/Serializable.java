@@ -1,5 +1,11 @@
 package com.zidanJmartKD.dbjson;
 
+/**
+ * @author Zidan Ramadhan
+ * @author zidan.ramadhan@ui.ac.id
+ * @version 1.0
+ */
+
 import java.util.HashMap;
 
 public class Serializable implements Comparable<Serializable>

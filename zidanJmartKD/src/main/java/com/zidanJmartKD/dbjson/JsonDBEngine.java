@@ -1,5 +1,11 @@
 package com.zidanJmartKD.dbjson;
 
+/**
+ * @author Zidan Ramadhan
+ * @author zidan.ramadhan@ui.ac.id
+ * @version 1.0
+ */
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Collections;

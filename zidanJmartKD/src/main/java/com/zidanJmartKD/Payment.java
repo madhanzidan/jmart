@@ -1,5 +1,11 @@
 package com.zidanJmartKD;
 
+/**
+ * @author Zidan Ramadhan
+ * @author zidan.ramadhan@ui.ac.id
+ * @version 1.0
+ */
+
 import java.util.Date;
 import java.util.ArrayList;
 
@@ -19,7 +25,7 @@ public class Payment extends Invoice
     @Override
     public double getTotalPay(Product product)
     {
-        return product.price - (product.price*product.discount);
+        return (product.price - (product.price*(product.discount/100)))*productCount;
     }
     
     public static class Record

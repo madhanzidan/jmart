@@ -1,4 +1,11 @@
 package com.zidanJmartKD.controller;
+
+/**
+ * @author Zidan Ramadhan
+ * @author zidan.ramadhan@ui.ac.id
+ * @version 1.0
+ */
+
 import com.zidanJmartKD.Account;
 import com.zidanJmartKD.Algorithm;
 import com.zidanJmartKD.Store;

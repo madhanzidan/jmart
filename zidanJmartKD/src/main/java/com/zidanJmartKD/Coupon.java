@@ -1,5 +1,11 @@
 package com.zidanJmartKD;
 
+/**
+ * @author Zidan Ramadhan
+ * @author zidan.ramadhan@ui.ac.id
+ * @version 1.0
+ */
+
 import com.zidanJmartKD.dbjson.Serializable;
 
 public class Coupon extends Serializable
