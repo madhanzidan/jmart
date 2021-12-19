@@ -18,9 +18,12 @@ public abstract class Invoice extends Serializable
     public final Date date;
     public int productId;
     public Rating rating;
-    
-    
-    
+
+    /**
+     * Inisialisasi aspek-aspek informasi pada invoice
+     * @param buyerId
+     * @param productId
+     */
     protected Invoice (int buyerId, int productId)
     {
 		this.buyerId = buyerId;
@@ -29,17 +32,31 @@ public abstract class Invoice extends Serializable
         complaintId = -1;
         rating = Rating.NONE;
     }
-    
+
+    /**
+     * Abstract to get total pay
+     * @param product
+     * @return
+     */
     public abstract double getTotalPay(Product product);
-    
-    //Enum
+
+    /**
+     * Enum of transaction status
+     */
     public static enum Status{
         CANCELLED, COMPLAINT, DELIVERED, FAILED, FINISHED, ON_DELIVERY, ON_PROGRESS, WAITING_CONFIRMATION;
     }
+
+    /**
+     * Enum of product rating
+     */
     public static enum Rating{
         BAD, GOOD, NEUTRAL, NONE;
     }
-    
+
+    /**
+     * Record for invoice
+     */
     public class Record
     {
     	public Date date;

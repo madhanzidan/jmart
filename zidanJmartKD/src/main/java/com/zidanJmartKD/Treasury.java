@@ -13,7 +13,13 @@ public class Treasury
     public static final double COMMISSION_MULTIPLIER = 0.05;
     public double discount;
     public double price;
-    
+
+    /**
+     * Mendapatkan harga setelah discount
+     * @param price
+     * @param discount
+     * @return harga setelah discount
+     */
     public static double getDiscountedPrice(double price, double discount)
     {
         if (discount > 100.0)
@@ -23,7 +29,13 @@ public class Treasury
             
         return price - (price * discount / 100);
     }
-    
+
+    /**
+     * Mendapatkan nilai dari admin fee
+     * @param price
+     * @param discount
+     * @return nilai dari admin fee
+     */
     public static double getAdminFee(double price, double discount)
     {
        if (getDiscountedPrice(price, discount) <= BOTTOM_PRICE)
@@ -31,7 +43,13 @@ public class Treasury
        else
            return COMMISSION_MULTIPLIER * getDiscountedPrice(price, discount);
     }
-    
+
+    /**
+     * Mendapatkan harga akhir setelah penerapan discount dan admin fee
+     * @param price
+     * @param discount
+     * @return harga akhir
+     */
     public static double getAdjustedPrice(double price, double discount)
     {
         return getDiscountedPrice(price, discount) + getAdminFee(price, discount);

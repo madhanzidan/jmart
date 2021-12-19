@@ -16,7 +16,15 @@ public class Coupon extends Serializable
     public final String name;
     public final Type type;
     public boolean used;
-    
+
+    /**
+     * Inisialisasi seluruh informasi untuk coupon
+     * @param name
+     * @param code
+     * @param type
+     * @param cut
+     * @param minimum
+     */
     public Coupon (String name, int code, Type type, double cut, double minimum)
     {
         this.name = name;
@@ -25,7 +33,13 @@ public class Coupon extends Serializable
         this.cut = cut;
         this.minimum = minimum;
     }
-   
+
+    /**
+     * Mengaplikasikan coupon
+     * @param price
+     * @param discount
+     * @return price yang telah diadjust berdasarkan penggunaan coupon
+     */
     public double apply (double price, double discount)
     {
         used = true;
@@ -34,7 +48,13 @@ public class Coupon extends Serializable
         else
             return Treasury.getAdjustedPrice(price, discount) - cut;
     }
-    
+
+    /**
+     * Memastikan coupon dapat diapply
+     * @param price
+     * @param discount
+     * @return penentuan apakah coupon dapat diapply atau tidak
+     */
     public boolean canApply (double price, double discount)
     {
         if (Treasury.getAdjustedPrice(price, discount) >= minimum && used == false)
@@ -42,12 +62,18 @@ public class Coupon extends Serializable
         else
             return false;
     }
-    
+
+    /**
+     * @return state pada coupon apabila telah digunakan
+     */
     public boolean isUsed()
     {
         return used;
     }
-   
+
+    /**
+     * Enumeration type of coupon
+     */
     public static enum Type
     {
         DISCOUNT, REBATE;

@@ -22,7 +22,11 @@ public class Jmart
 	public static long ON_DELIVERY_LIMIT_MS = 100;
 	public static long ON_PROGRESS_LIMIT_MS = 100;
 	public static long WAITING_CONF_LIMIT_MS = 100;
-	
+
+	/**
+	 * Run json db engine and springboot
+	 * @param args
+	 */
     public static void main(String[] args) 
     {
 		JsonDBEngine.Run(Jmart.class);

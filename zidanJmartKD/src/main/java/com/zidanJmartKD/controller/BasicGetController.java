@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Membuat interface untuk diimplementasikan di setiap controller
+ * @param <T>
+ */
 @RestController
 public interface BasicGetController<T extends Serializable>{
     @GetMapping("/{id}")

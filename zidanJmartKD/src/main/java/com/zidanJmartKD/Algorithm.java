@@ -12,8 +12,14 @@ import java.lang.Iterable;
 public class Algorithm {
 	private Algorithm() {
 	}
-	
-	//List
+
+	/**
+	 * Algorithm for collecting data
+	 * @param array
+	 * @param value
+	 * @param <T>
+	 * @return list of data collected
+	 */
 	public static <T> List<T> collect(T[] array, T value) {
 		Predicate<T> pred = val -> val.equals(value);
 		List<T> list = new ArrayList<>();
@@ -86,8 +92,15 @@ public class Algorithm {
 		}
 		return list;
 	}
-	
-	//int
+
+
+	/**
+	 * algorithm for counting data
+	 * @param array
+	 * @param value
+	 * @param <T>
+	 * @return data counted
+	 */
 	public static <T> int count(T[] array, T value) {
 		int count = 0;
 		Predicate<T> pred = val -> (val == value);
@@ -156,8 +169,14 @@ public class Algorithm {
 		}
 		return count;
 	}
-	
-	//boolean
+
+	/**
+	 * Algorithm to check data existency
+	 * @param array
+	 * @param value
+	 * @param <T>
+	 * @return existency of data
+	 */
 	public static <T> boolean exists (T[] array, T value){
 		Predicate<T> pred = val -> (val == value);
 		for (T t : array) {
@@ -220,8 +239,14 @@ public class Algorithm {
         }
         return false;
 	}
-	
-	//T
+
+	/**
+	 * Algorithm of finding data
+	 * @param array
+	 * @param value
+	 * @param <T>
+	 * @return data that already found
+	 */
 	public static <T> T find (T[] array, T value) {
 		Predicate<T> pred = val -> (val == value);
 		for (T t : array) {
@@ -283,8 +308,14 @@ public class Algorithm {
 		}
 		return null;
 	}
-	
-	//T MAX
+
+	/**
+	 * Comparison of max value data
+	 * @param first
+	 * @param second
+	 * @param <T>
+	 * @return result of the comparison or maximum data
+	 */
 	public static <T extends Comparable<? super T>> T max (T first, T second) {
 		if (first.compareTo(second)>0) {
 			return first;
@@ -372,9 +403,14 @@ public class Algorithm {
 		}
 		return maximum;
 	}
-	
-	
-	//T MIN
+
+	/**
+	 * Comparison of minimum value data
+	 * @param first
+	 * @param second
+	 * @param <T>
+	 * @return result of the comparison or minimum data
+	 */
 	public <T extends Comparable<? super T>> T min (T first, T second) {
 		if (first.compareTo(second) < 0) {
 			return first;
@@ -474,7 +510,16 @@ public class Algorithm {
 		}
 		return minimum;
 	}
-	//List<T>
+
+	/**
+	 * Algorithm paginate untuk penerapan page pada activity
+	 * @param array
+	 * @param page
+	 * @param pageSize
+	 * @param pred
+	 * @param <T>
+	 * @return collection untuk page
+	 */
 	public static <T> List<T> paginate (T[] array, int page, int pageSize, Predicate<T> pred)
 	{
 		List<T> paginationList = new ArrayList<>();

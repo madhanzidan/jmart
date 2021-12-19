@@ -6,6 +6,10 @@ package com.zidanJmartKD;
  * @version 1.0
  */
 
+/**
+ * Interface for predicate
+ * @param <T>
+ */
 public interface Predicate<T> {
 	public abstract boolean predicate(T arg);
 }

@@ -20,15 +20,30 @@ import static com.zidanJmartKD.controller.ProductController.productTable;
 @RestController
 @RequestMapping("/payment")
 class PaymentController implements BasicGetController<Payment>{
+    /**
+     * Set time limit of every transaction state
+     */
     public static long DELIVERED_LIMIT_MS = 100;
     public static long ON_DELIVERY_LIMIT_MS = 100;
     public static long ON_PROGRESS_LIMIT_MS = 100;
     public static long WAITING_CONF_LIMIT_MS = 100;
 
+    /**
+     * Store the payment information on the Payment.json
+     */
     @JsonAutowired(filepath = "C:\\Kuliah Semester 5\\Java\\jmart\\Payment.json", value = Payment.class)
     public static JsonTable<Payment> paymentTable;
     public static ObjectPoolThread<Payment> poolThread = new ObjectPoolThread<>(PaymentController::timekeeper);
 
+    /**
+     * Create payment event of product
+     * @param buyerId
+     * @param productId
+     * @param productCount
+     * @param shipmentAddress
+     * @param shipmentPlan
+     * @return payment information
+     */
     @PostMapping("create")
     Payment create (@RequestParam int buyerId, @RequestParam int productId,@RequestParam int productCount, @RequestParam String shipmentAddress, @RequestParam byte shipmentPlan)
     {
@@ -48,30 +63,13 @@ class PaymentController implements BasicGetController<Payment>{
         }
         return null;
 
-        /*
-        Predicate<Account> findAcc = accFound -> accFound.id == buyerId;
-        Predicate<Product> findProd = prodFound -> prodFound.id == productId;
-
-        Product prod = find(productTable, findProd);
-        Account acc = find(accountTable, findAcc);
-        Payment pay = Algorithm.<Payment>find(paymentTable, (Predicate<Payment>) pred -> prod.id == buyerId && acc.id == buyerId);
-        Shipment shipment = new Shipment(shipmentAddress, 0, shipmentPlan, null);
-        pay.shipment = shipment;
-
-        if (Algorithm.exists(accountTable, findAcc) &&
-                Algorithm.exists(productTable, findProd) &&
-                acc.balance >= prod.price * productCount)
-        {
-            acc.balance -= pay.getTotalPay(prod) * productCount;
-            pay.history.add(new Payment.Record(Invoice.Status.WAITING_CONFIRMATION, "Menunggu konfirmasi"));
-            getJsonTable().add(pay);
-            poolThread.add(pay);
-        }
-        else
-            return null;
-        return pay;*/
     }
 
+    /**
+     * Create condition when payment accepted by store
+     * @param id
+     * @return paymen history and payment state
+     */
     @PostMapping("{id}/accept")
     boolean accept (@RequestParam int id){
         Predicate<Payment> findPay = payFound -> payFound.id == id;
@@ -88,6 +86,11 @@ class PaymentController implements BasicGetController<Payment>{
             return false;
     }
 
+    /**
+     * Create condition when payment canceled by store
+     * @param id
+     * @return payment history
+     */
     @PostMapping("{id}/cancel")
     boolean cancel (@PathVariable int id){
         Predicate<Payment> findPay = payFound -> payFound.id == id;
@@ -104,6 +107,12 @@ class PaymentController implements BasicGetController<Payment>{
             return false;
     }
 
+    /**
+     * Create condition when payment submitted by store
+     * @param id
+     * @param receipt
+     * @return payment history
+     */
     @PostMapping("{id}/submit")
     boolean submit (@PathVariable int id, @RequestParam String receipt)
     {
@@ -123,11 +132,19 @@ class PaymentController implements BasicGetController<Payment>{
             return false;
     }
 
+    /**
+     * @return the table information of payment
+     */
     @Override
     public JsonTable<Payment> getJsonTable() {
         return paymentTable;
     }
 
+    /**
+     * Create time keeper to set the state of payment process
+     * @param payment
+     * @return the end of process
+     */
     private static boolean timekeeper (@RequestParam Payment payment){
         boolean endSignal = true;
         while (!endSignal) {

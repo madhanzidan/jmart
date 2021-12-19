@@ -6,6 +6,9 @@ package com.zidanJmartKD;
  * @version 1.0
  */
 
+/**
+ * Category enumeration for every product
+ */
 public enum ProductCategory
 {
     BOOK,

@@ -30,7 +30,11 @@ public class Account extends Serializable
         this.balance = balance;
         store = null;
     }
-    
+
+    /**
+     * Validate the email and password
+     * @return validation of email and password
+     */
     public boolean validate()
     {
         Pattern emailPattern = Pattern.compile(REGEX_EMAIL);
@@ -41,7 +45,10 @@ public class Account extends Serializable
         
         return emailMatcher.find() && passwordMatcher.find();
     }
-    
+
+    /**
+     * @return name, email, and password of every account
+     */
     public String toString() {
     	return "name: "+ name + "\nemail: " + email +"\npassword: " + password;
     }

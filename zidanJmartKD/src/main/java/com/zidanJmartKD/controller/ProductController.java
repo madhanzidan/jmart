@@ -20,9 +20,24 @@ import static com.zidanJmartKD.controller.AccountController.accountTable;
 @RestController
 @RequestMapping("/product")
 public class ProductController implements BasicGetController<Product> {
+    /**
+     * Store the product information on Product.json
+     */
     @JsonAutowired(value = Product.class, filepath = "C:\\Kuliah Semester 5\\Java\\jmart\\Product.json")
     public static JsonTable<Product> productTable;
 
+    /**
+     * Create new product of store
+     * @param accountId
+     * @param name
+     * @param weight
+     * @param conditionUsed
+     * @param price
+     * @param discount
+     * @param category
+     * @param shipmentPlans
+     * @return new product
+     */
     @PostMapping("/create")
     Product create (@RequestParam int accountId,
                     @RequestParam String name,
@@ -46,32 +61,44 @@ public class ProductController implements BasicGetController<Product> {
         }
     }
 
+    /**
+     * @return table consists of product information
+     */
     public JsonTable<Product> getJsonTable ()
     {
         return productTable;
     }
 
+    /**
+     * Get the product of a store
+     * @param id
+     * @param page
+     * @param pageSize
+     * @return product data of a store on page
+     */
     @GetMapping("/{id}/store")
     List<Product> getProductByStore (@PathVariable int id, @RequestParam int page, @RequestParam int pageSize)
     {
         Predicate<Product> pred = product -> true;
         List<Product> list = new ArrayList<>();
-        //return Algorithm.paginate(this.getJsonTable().iterator(), page, pageSize, pred);
+
         for(Product product : getJsonTable()) {
             list.add(product);
         }
         return Algorithm.<Product>paginate(list, page, pageSize, pred);
     }
 
-    /*
-    @GetMapping("/getFiltered")
-    List<Product> getProductFiltered (@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "2") int pageSize, @RequestParam int accountId, @RequestParam String search, @RequestParam int minPrice, @RequestParam int maxPrice, @RequestParam ProductCategory category)
-    {
-        return Algorithm.<Product>paginate(getJsonTable(), page, pageSize, (product -> product.accountId == accountId
-                && product.name.toLowerCase().contains(search)
-                && product.price >= minPrice && product.price <= maxPrice
-                && product.category == category));
-    }*/
+    /**
+     * Get product that already filtered
+     * @param page
+     * @param pageSize
+     * @param accountId
+     * @param search
+     * @param minPrice
+     * @param maxPrice
+     * @param category
+     * @return filtered product data on page
+     */
     @GetMapping("/getFiltered")
     List<Product> getProductFiltered(@RequestParam int page, @RequestParam int pageSize, @RequestParam int accountId,
                                      @RequestParam String search, @RequestParam int minPrice, @RequestParam int maxPrice,

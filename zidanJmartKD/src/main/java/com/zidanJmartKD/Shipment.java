@@ -23,7 +23,14 @@ public class Shipment
     public int cost;
     public byte plan;
     public String receipt;
-    
+
+    /**
+     * Menginisialisasi seluruh informasi shipment
+     * @param address
+     * @param Cost
+     * @param plan
+     * @param receipt
+     */
     public Shipment(String address, int Cost, byte plan, String receipt)
     {
         this.address = address;
@@ -31,7 +38,12 @@ public class Shipment
         this.plan = plan;
         this.receipt = receipt;
     }
-    
+
+    /**
+     * Mendapatkan estimasi kedatangan product
+     * @param reference
+     * @return estimation state
+     */
     public String getEstimatedArrival (Date reference)
     {
             Calendar cal = Calendar.getInstance();
@@ -51,15 +63,27 @@ public class Shipment
                 return ESTIMATION_FORMAT.format(cal.getTime());           
             }
     }
-    
+
+    /**
+     * @param reference
+     * @return durasi dari shipment dengan pengecekan plan dan reference
+     */
     public boolean isDuration (Plan reference) {
     	return (this.plan & reference.bit) != 0;
     }
-    
+
+    /**
+     * @param object
+     * @param reference
+     * @return durasi dari shipment dengan pengecekan object dan reference
+     */
     public static boolean isDuration (byte object, Plan reference) {
     	return (object & reference.bit) != 0;
     }
-    
+
+    /**
+     * Penentuan shipment plan dengan bit
+     */
     public static class Plan {
     	public final byte bit;
     	

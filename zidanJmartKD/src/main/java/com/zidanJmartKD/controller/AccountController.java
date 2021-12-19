@@ -22,19 +22,35 @@ import java.util.regex.Pattern;
 @RequestMapping("/account")
 public class AccountController implements BasicGetController<Account>
 {
+    /**
+     * Regex for email and password
+     */
     public static final String REGEX_EMAIL = "^\\w+([\\.]?[&\\*~\\w+])*@\\w+([\\.-]?)*(\\.\\w{2,3})+$";
     public static final String REGEX_PASSWORD = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$)(?=.*[A-Z]).{8,}$";
     public static final Pattern REGEX_PATTERN_EMAIL = Pattern.compile(REGEX_EMAIL);
     public static final Pattern REGEX_PATTERN_PASSWORD  = Pattern.compile(REGEX_PASSWORD);
 
+    /**
+     * Store the account information to Account.json
+     */
     @JsonAutowired(filepath = "C:\\Kuliah Semester 5\\Java\\jmart\\Account.json", value = Account.class)
     public static JsonTable<Account> accountTable;
 
+    /**
+     * Get account information
+     * @return table with account information
+     */
     public JsonTable<Account> getJsonTable ()
     {
         return accountTable;
     }
 
+    /**
+     * Process email and password for login
+     * @param email
+     * @param password
+     * @return
+     */
     @PostMapping("/login")
     Account login(@RequestParam String email, @RequestParam String password)
     {
@@ -58,9 +74,19 @@ public class AccountController implements BasicGetController<Account>
         return null;
     }
 
+    /**
+     * @return the page of account
+     */
     @GetMapping
     String index() { return "account page"; }
 
+    /**
+     * Process name, email, and password for register
+     * @param name
+     * @param email
+     * @param password
+     * @return new account with information from parameters
+     */
     @PostMapping("/register")
     Account register(@RequestParam String name, @RequestParam String email, @RequestParam String password)
     {
@@ -86,17 +112,28 @@ public class AccountController implements BasicGetController<Account>
         return null;
     }
 
+    /**
+     * Create new store
+     * @param id
+     * @param name
+     * @param address
+     * @param phoneNumber
+     * @return account of new store
+     */
     @PostMapping("/{id}/registerStore")
     Store registerStore(@PathVariable int id, @RequestParam String name, @RequestParam String address, @RequestParam String phoneNumber)
     {
-        //if(Algorithm.exists(getJsonTable().toArray(), id) || !Algorithm.exists(getJsonTable().toArray(), name)) {
             Account acc = Algorithm.<Account>find(getJsonTable(), (account -> account.id == id && account.store == null));
             acc.store = new Store(name, address, phoneNumber, 0);
             return acc.store;
-        //}
-       // return null;
     }
 
+    /**
+     * Top up account balance
+     * @param id
+     * @param balance
+     * @return algorithm that increase the balance amount
+     */
     @PostMapping("/{id}/topUp")
     boolean topUp (@PathVariable int id, @RequestParam double balance)
     {

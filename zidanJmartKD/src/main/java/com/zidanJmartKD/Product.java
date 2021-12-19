@@ -19,8 +19,17 @@ public class Product extends Serializable
     public ProductCategory category;
     public byte shipmentPlans;
 
-    
-    
+    /**
+     * Menginisialisasi seluruh parameter product
+     * @param accountId
+     * @param name
+     * @param weight
+     * @param conditionUsed
+     * @param price
+     * @param discount
+     * @param category
+     * @param shipmentPlans
+     */
     public Product(int accountId, String name, int weight, boolean conditionUsed, double price, double discount, ProductCategory category, byte shipmentPlans)
     {
     	this.accountId = accountId;
@@ -32,7 +41,11 @@ public class Product extends Serializable
     	this.category = category;
     	this.shipmentPlans = shipmentPlans;
     }
-    
+
+    /**
+     * Shows product information to list view on product fragment
+     * @return information of product
+     */
     public String toString(){
         return 
         "accountId: " + accountId +
